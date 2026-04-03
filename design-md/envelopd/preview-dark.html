@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System Preview: Envelopd / Pocket Stack (Dark)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Instrument+Serif&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Dark mode: warm scale inverted */
+    --warm-50: hsl(25 15% 12%);
+    --warm-100: hsl(24 14% 16%);
+    --warm-200: hsl(23 12% 22%);
+    --warm-300: hsl(22 14% 32%);
+    --warm-400: hsl(24 18% 44%);
+    --warm-500: hsl(26 22% 56%);
+    --warm-600: hsl(28 28% 66%);
+    --warm-700: hsl(30 32% 76%);
+    --warm-800: hsl(32 36% 86%);
+    --warm-900: hsl(34 40% 92%);
+    --accent: hsl(27 90% 55%);
+    --accent-fg: hsl(36 45% 97%);
+    --card: hsl(25 12% 10%);
+    --card-fg: hsl(34 20% 90%);
+    --surface: hsl(24 10% 8%);
+    --status-active: hsl(152 55% 38%);
+    --status-frozen: hsl(210 60% 50%);
+    --status-needs-money: hsl(38 85% 45%);
+    --status-no-card: hsl(220 6% 44%);
+    --success: #10B981;
+    --danger: #EF4444;
+    --shadow-sm: 0 1px 3px hsl(0 0% 0% / 0.2), 0 1px 2px hsl(0 0% 0% / 0.15);
+    --shadow: 0 2px 8px hsl(0 0% 0% / 0.25), 0 1px 3px hsl(0 0% 0% / 0.2);
+    --shadow-md: 0 4px 16px hsl(0 0% 0% / 0.3), 0 2px 6px hsl(0 0% 0% / 0.2);
+    --shadow-lg: 0 8px 24px hsl(0 0% 0% / 0.35), 0 4px 10px hsl(0 0% 0% / 0.25);
+    --font-display: 'Instrument Serif', Georgia, serif;
+    --font-body: 'DM Sans', Inter, system-ui, sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--surface);
+    color: var(--card-fg);
+    font-family: var(--font-body);
+    font-size: 16px; font-weight: 400; line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    padding: 0 0 64px;
+  }
+
+  .section { max-width: 480px; margin: 0 auto; padding: 24px 16px; }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: 2.5rem; font-weight: 400; line-height: 1.1;
+    letter-spacing: -0.02em; color: var(--card-fg); margin-bottom: 24px;
+  }
+  .section-label {
+    font-size: 11px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.05em; color: var(--warm-400); margin-bottom: 12px;
+  }
+
+  .swatch-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 24px; }
+  .swatch {
+    aspect-ratio: 1; border-radius: 12px; display: flex; align-items: flex-end;
+    padding: 6px; font-size: 10px; font-weight: 500; box-shadow: var(--shadow-sm);
+  }
+  .swatch-wide { grid-column: span 2; aspect-ratio: 2/1; }
+
+  .warm-scale { display: flex; gap: 4px; margin-bottom: 24px; border-radius: 16px; overflow: hidden; }
+  .warm-step { flex: 1; height: 48px; display: flex; align-items: flex-end; padding: 4px; font-size: 9px; font-weight: 500; }
+
+  .type-row { margin-bottom: 16px; padding: 12px 16px; background: var(--card); border-radius: 16px; box-shadow: var(--shadow-sm); }
+  .type-meta { font-size: 11px; color: var(--warm-400); margin-bottom: 4px; }
+  .type-hero { font-family: var(--font-display); font-size: 2.5rem; line-height: 1.1; letter-spacing: -0.02em; }
+  .type-card-title { font-family: var(--font-body); font-size: 1.125rem; font-weight: 600; line-height: 1.3; }
+  .type-card-amount { font-family: var(--font-body); font-size: 1.5rem; font-weight: 700; line-height: 1.2; font-variant-numeric: tabular-nums; letter-spacing: -0.025em; }
+  .type-label { font-family: var(--font-body); font-size: 0.8125rem; font-weight: 500; line-height: 1.4; color: var(--warm-500); }
+  .type-caption { font-family: var(--font-body); font-size: 0.75rem; font-weight: 400; line-height: 1.4; color: var(--warm-400); }
+
+  .btn-row { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 24px; }
+  .btn-primary {
+    display: inline-flex; align-items: center; justify-content: center;
+    height: 48px; padding: 0 24px; border-radius: 16px; border: none; cursor: pointer;
+    background: linear-gradient(to right, var(--accent), var(--warm-300));
+    color: #fff; font-family: var(--font-body); font-size: 16px; font-weight: 600;
+    transition: opacity 0.2s;
+  }
+  .btn-primary:hover { opacity: 0.9; }
+  .btn-pill {
+    display: inline-flex; align-items: center; justify-content: center;
+    height: 36px; padding: 0 20px; border-radius: 9999px; border: none; cursor: pointer;
+    background: linear-gradient(to right, var(--accent), var(--warm-300));
+    color: #fff; font-family: var(--font-body); font-size: 14px; font-weight: 600;
+    transition: opacity 0.2s;
+  }
+  .btn-pill:hover { opacity: 0.9; }
+  .btn-outline {
+    display: inline-flex; align-items: center; justify-content: center;
+    height: 36px; padding: 0 20px; border-radius: 9999px; cursor: pointer;
+    background: transparent; border: 1px solid var(--warm-200);
+    color: var(--card-fg); font-family: var(--font-body); font-size: 14px; font-weight: 500;
+    transition: background 0.2s;
+  }
+  .btn-outline:hover { background: var(--warm-100); }
+  .btn-amount {
+    display: inline-flex; align-items: center; justify-content: center;
+    height: 56px; width: 100px; border-radius: 16px; cursor: pointer;
+    background: var(--card); border: 2px solid var(--warm-200);
+    color: var(--card-fg); font-family: var(--font-body); font-size: 18px; font-weight: 600;
+    transition: all 0.2s;
+  }
+  .btn-amount.selected { border-color: var(--accent); background: hsla(27, 90%, 55%, 0.1); color: var(--accent); }
+
+  .card {
+    background: var(--card); border: 1px solid var(--warm-200); border-radius: 16px;
+    padding: 16px; box-shadow: var(--shadow); margin-bottom: 12px;
+    transition: all 0.2s;
+  }
+  .card.pressable { cursor: pointer; }
+  .card.pressable:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+  .card.pressable:active { box-shadow: var(--shadow-sm); transform: translateY(0); }
+  .card.active { border-color: hsla(152, 55%, 38%, 0.3); }
+  .card.frozen { background: linear-gradient(135deg, var(--card), hsla(210, 60%, 50%, 0.08)); border-color: hsla(210, 60%, 50%, 0.3); }
+  .card.needs-money { border-color: hsla(38, 85%, 45%, 0.4); }
+  .card.no-card { background: var(--warm-50); opacity: 0.9; }
+  .card-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+  .card-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--warm-100); }
+
+  .badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    border-radius: 9999px; padding: 4px 10px;
+    font-size: 12px; font-weight: 600;
+  }
+  .badge-dot { width: 6px; height: 6px; border-radius: 9999px; }
+  .badge-active { background: hsla(152, 55%, 38%, 0.2); color: var(--status-active); }
+  .badge-active .badge-dot { background: var(--status-active); }
+  .badge-frozen { background: hsla(210, 60%, 50%, 0.2); color: var(--status-frozen); }
+  .badge-frozen .badge-dot { background: var(--status-frozen); }
+  .badge-needs-money { background: hsla(38, 85%, 45%, 0.2); color: var(--status-needs-money); }
+  .badge-needs-money .badge-dot { background: var(--status-needs-money); }
+  .badge-no-card { background: hsla(220, 6%, 44%, 0.2); color: var(--status-no-card); }
+  .badge-no-card .badge-dot { background: var(--status-no-card); }
+
+  .banner {
+    display: flex; align-items: center; gap: 16px; padding: 16px;
+    border-radius: 16px; border: 1px solid hsla(27, 90%, 55%, 0.3);
+    background: linear-gradient(to right, hsla(27, 90%, 55%, 0.15), hsla(24, 14%, 16%, 0.4), hsla(24, 10%, 8%, 0.2));
+    box-shadow: var(--shadow-sm); cursor: pointer; transition: all 0.2s;
+  }
+  .banner:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
+  .banner-icon {
+    width: 44px; height: 44px; border-radius: 12px;
+    background: hsla(27, 90%, 55%, 0.15); display: flex; align-items: center; justify-content: center;
+    font-size: 20px; flex-shrink: 0;
+  }
+  .banner-content { flex: 1; min-width: 0; }
+  .banner-title { font-size: 14px; font-weight: 600; color: var(--card-fg); }
+  .banner-desc { font-size: 12px; color: var(--warm-500); margin-top: 2px; line-height: 1.4; }
+  .banner-cta { font-size: 12px; font-weight: 600; color: var(--accent); flex-shrink: 0; }
+
+  .input-group { margin-bottom: 24px; }
+  .input-label { font-size: 14px; font-weight: 500; color: var(--warm-600); margin-bottom: 6px; }
+  .input-field {
+    width: 100%; height: 56px; border-radius: 16px; border: 2px solid var(--warm-200);
+    padding: 0 16px; font-family: var(--font-body); font-size: 18px; font-weight: 600;
+    color: var(--card-fg); background: var(--card); outline: none; transition: border-color 0.2s;
+  }
+  .input-field:focus { border-color: var(--accent); }
+  .input-field::placeholder { color: var(--warm-400); font-weight: 400; }
+
+  .shadow-demo { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 24px; }
+  .shadow-box {
+    background: var(--card); border-radius: 16px; padding: 20px; text-align: center;
+    font-size: 12px; font-weight: 500; color: var(--warm-500);
+  }
+
+  .nav-preview {
+    display: flex; align-items: flex-end; justify-content: space-around;
+    background: hsla(25, 12%, 10%, 0.95); backdrop-filter: blur(12px);
+    border-radius: 16px; padding: 8px 16px 12px; box-shadow: var(--shadow);
+    margin-bottom: 24px;
+  }
+  .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .nav-icon { width: 20px; height: 20px; border-radius: 6px; background: var(--warm-200); }
+  .nav-icon.active-icon { background: var(--accent); }
+  .nav-label { font-size: 10px; font-weight: 500; color: var(--warm-400); }
+  .nav-label.active-label { color: var(--accent); }
+  .nav-center {
+    width: 48px; height: 48px; border-radius: 9999px; margin-top: -20px;
+    background: linear-gradient(to right, var(--accent), var(--warm-300));
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: var(--shadow-md); color: #fff; font-size: 20px; font-weight: 700;
+  }
+
+  .progress-bar { display: flex; gap: 4px; margin-bottom: 24px; }
+  .progress-step { width: 24px; height: 6px; border-radius: 9999px; background: var(--warm-200); }
+  .progress-step.filled { background: var(--accent); }
+
+  .sheet {
+    background: var(--card); border-radius: 16px; box-shadow: var(--shadow-lg);
+    border: 1px solid var(--warm-100); overflow: hidden; margin-bottom: 24px;
+  }
+  .sheet-handle { display: flex; justify-content: center; padding: 12px 0 4px; }
+  .sheet-handle-bar { width: 40px; height: 4px; border-radius: 9999px; background: var(--warm-300); }
+  .sheet-header { padding: 8px 24px 16px; border-bottom: 1px solid var(--warm-100); }
+  .sheet-title { font-family: var(--font-display); font-size: 18px; color: var(--card-fg); }
+  .sheet-body { padding: 24px; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="section">
+  <p class="section-label">Envelopd / Pocket Stack (Dark)</p>
+  <h1 class="section-title">Design System Preview</h1>
+  <p style="color: var(--warm-500); font-size: 14px; margin-bottom: 8px;">Warm, tactile, card-first personal finance UI.</p>
+</div>
+
+<!-- WARM SCALE -->
+<div class="section">
+  <p class="section-label">Warm Palette (Dark Mode)</p>
+  <div class="warm-scale">
+    <div class="warm-step" style="background: var(--warm-50); color: var(--warm-600);">50</div>
+    <div class="warm-step" style="background: var(--warm-100); color: var(--warm-600);">100</div>
+    <div class="warm-step" style="background: var(--warm-200); color: var(--warm-600);">200</div>
+    <div class="warm-step" style="background: var(--warm-300); color: var(--warm-900);">300</div>
+    <div class="warm-step" style="background: var(--warm-400); color: var(--warm-900);">400</div>
+    <div class="warm-step" style="background: var(--warm-500); color: var(--warm-900);">500</div>
+    <div class="warm-step" style="background: var(--warm-600); color: var(--warm-50);">600</div>
+    <div class="warm-step" style="background: var(--warm-700); color: var(--warm-50);">700</div>
+    <div class="warm-step" style="background: var(--warm-800); color: var(--warm-50);">800</div>
+    <div class="warm-step" style="background: var(--warm-900); color: var(--warm-50);">900</div>
+  </div>
+
+  <p class="section-label">Accent & Status</p>
+  <div class="swatch-grid">
+    <div class="swatch swatch-wide" style="background: var(--accent); color: #fff;">Accent</div>
+    <div class="swatch" style="background: var(--status-active); color: #fff;">Active</div>
+    <div class="swatch" style="background: var(--status-frozen); color: #fff;">Frozen</div>
+    <div class="swatch" style="background: var(--status-needs-money); color: var(--warm-50);">Amber</div>
+    <div class="swatch" style="background: var(--status-no-card); color: #fff;">Gray</div>
+    <div class="swatch" style="background: var(--card); color: var(--warm-400); border: 1px solid var(--warm-200);">Card</div>
+    <div class="swatch" style="background: var(--surface); color: var(--warm-400);">Surface</div>
+    <div class="swatch" style="background: var(--danger); color: #fff;">Danger</div>
+  </div>
+</div>
+
+<!-- TYPOGRAPHY -->
+<div class="section">
+  <p class="section-label">Typography</p>
+  <div class="type-row">
+    <p class="type-meta">Display Hero -- Instrument Serif 40px / 400</p>
+    <p class="type-hero">Your money, organized.</p>
+  </div>
+  <div class="type-row">
+    <p class="type-meta">Card Title -- DM Sans 18px / 600</p>
+    <p class="type-card-title">Groceries</p>
+  </div>
+  <div class="type-row">
+    <p class="type-meta">Card Amount -- DM Sans 24px / 700 tabular-nums</p>
+    <p class="type-card-amount">$1,247.50</p>
+  </div>
+  <div class="type-row">
+    <p class="type-meta">Label -- DM Sans 13px / 500</p>
+    <p class="type-label">Available balance</p>
+  </div>
+  <div class="type-row">
+    <p class="type-meta">Caption -- DM Sans 12px / 400</p>
+    <p class="type-caption">Last funded 2 days ago</p>
+  </div>
+</div>
+
+<!-- BUTTONS -->
+<div class="section">
+  <p class="section-label">Buttons</p>
+  <div class="btn-row">
+    <button class="btn-primary">Confirm Top Up</button>
+  </div>
+  <div class="btn-row">
+    <button class="btn-pill">Done</button>
+    <button class="btn-outline">Cancel</button>
+  </div>
+  <div class="btn-row">
+    <button class="btn-amount">$25</button>
+    <button class="btn-amount selected">$50</button>
+    <button class="btn-amount">$100</button>
+    <button class="btn-amount">$200</button>
+  </div>
+</div>
+
+<!-- CARDS -->
+<div class="section">
+  <p class="section-label">Cards</p>
+
+  <div class="card pressable active">
+    <div class="card-header">
+      <span class="type-card-title">Groceries</span>
+      <span class="badge badge-active"><span class="badge-dot"></span> Active</span>
+    </div>
+    <div class="card-body">
+      <p class="type-card-amount">$342.18</p>
+      <p class="type-label">of $500 monthly budget</p>
+    </div>
+    <div class="card-footer">
+      <span class="type-caption">Visa ****4821</span>
+      <span class="type-caption" style="color: var(--status-active);">On track</span>
+    </div>
+  </div>
+
+  <div class="card pressable frozen">
+    <div class="card-header">
+      <span class="type-card-title">Vacation Fund</span>
+      <span class="badge badge-frozen"><span class="badge-dot"></span> Frozen</span>
+    </div>
+    <div class="card-body">
+      <p class="type-card-amount">$1,850.00</p>
+      <p class="type-label">Saving for summer trip</p>
+    </div>
+  </div>
+
+  <div class="card pressable needs-money">
+    <div class="card-header">
+      <span class="type-card-title">Gas</span>
+      <span class="badge badge-needs-money"><span class="badge-dot"></span> Needs Money</span>
+    </div>
+    <div class="card-body">
+      <p class="type-card-amount">$12.40</p>
+      <p class="type-label">of $150 monthly budget</p>
+    </div>
+  </div>
+
+  <div class="card no-card">
+    <div class="card-header">
+      <span class="type-card-title">Entertainment</span>
+      <span class="badge badge-no-card"><span class="badge-dot"></span> No Card</span>
+    </div>
+    <div class="card-body">
+      <p class="type-card-amount">$0.00</p>
+      <p class="type-label">Generate a card to start spending</p>
+    </div>
+  </div>
+</div>
+
+<!-- BADGES -->
+<div class="section">
+  <p class="section-label">Status Badges</p>
+  <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px;">
+    <span class="badge badge-active"><span class="badge-dot"></span> Active</span>
+    <span class="badge badge-frozen"><span class="badge-dot"></span> Frozen</span>
+    <span class="badge badge-needs-money"><span class="badge-dot"></span> Needs Money</span>
+    <span class="badge badge-no-card"><span class="badge-dot"></span> No Card</span>
+  </div>
+</div>
+
+<!-- BANNER -->
+<div class="section">
+  <p class="section-label">Spendable Banner</p>
+  <div class="banner">
+    <div class="banner-icon">&#9889;</div>
+    <div class="banner-content">
+      <p class="banner-title">Fund an envelope</p>
+      <p class="banner-desc">Add money to an envelope so you can start spending with its card.</p>
+    </div>
+    <span class="banner-cta">Top Up &rsaquo;</span>
+  </div>
+</div>
+
+<!-- INPUT -->
+<div class="section">
+  <p class="section-label">Input</p>
+  <div class="input-group">
+    <p class="input-label">Custom amount</p>
+    <input class="input-field" type="text" placeholder="$0.00">
+  </div>
+</div>
+
+<!-- SHADOWS -->
+<div class="section">
+  <p class="section-label">Elevation</p>
+  <div class="shadow-demo">
+    <div class="shadow-box" style="box-shadow: var(--shadow-sm);">pocket-sm</div>
+    <div class="shadow-box" style="box-shadow: var(--shadow);">pocket</div>
+    <div class="shadow-box" style="box-shadow: var(--shadow-md);">pocket-md</div>
+    <div class="shadow-box" style="box-shadow: var(--shadow-lg);">pocket-lg</div>
+  </div>
+</div>
+
+<!-- PROGRESS -->
+<div class="section">
+  <p class="section-label">Step Progress</p>
+  <div class="progress-bar">
+    <div class="progress-step filled"></div>
+    <div class="progress-step filled"></div>
+    <div class="progress-step"></div>
+    <div class="progress-step"></div>
+  </div>
+</div>
+
+<!-- BOTTOM SHEET -->
+<div class="section">
+  <p class="section-label">Bottom Sheet</p>
+  <div class="sheet">
+    <div class="sheet-handle"><div class="sheet-handle-bar"></div></div>
+    <div class="sheet-header">
+      <div style="display: flex; align-items: center; justify-content: space-between;">
+        <span class="sheet-title">Top Up</span>
+        <div class="progress-bar" style="margin: 0;">
+          <div class="progress-step filled"></div>
+          <div class="progress-step filled"></div>
+          <div class="progress-step filled"></div>
+          <div class="progress-step"></div>
+        </div>
+      </div>
+    </div>
+    <div class="sheet-body">
+      <div style="text-align: center; margin-bottom: 20px;">
+        <p class="type-card-title">Groceries</p>
+        <p class="type-label" style="margin-top: 4px;">Current balance: $342.18 of $500</p>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px;">
+        <button class="btn-amount" style="width: 100%;">$25</button>
+        <button class="btn-amount selected" style="width: 100%;">$50</button>
+        <button class="btn-amount" style="width: 100%;">$100</button>
+        <button class="btn-amount" style="width: 100%;">$200</button>
+      </div>
+      <button class="btn-primary" style="width: 100%;">Continue &rarr;</button>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<div class="section">
+  <p class="section-label">Mobile Navigation</p>
+  <div class="nav-preview">
+    <div class="nav-item">
+      <div class="nav-icon active-icon"></div>
+      <span class="nav-label active-label">Home</span>
+    </div>
+    <div class="nav-item">
+      <div class="nav-icon"></div>
+      <span class="nav-label">Envelopes</span>
+    </div>
+    <div class="nav-item">
+      <div class="nav-center">+</div>
+      <span class="nav-label" style="margin-top: 4px;">Top Up</span>
+    </div>
+    <div class="nav-item">
+      <div class="nav-icon"></div>
+      <span class="nav-label">Family</span>
+    </div>
+    <div class="nav-item">
+      <div class="nav-icon"></div>
+      <span class="nav-label">Settings</span>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
