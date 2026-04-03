@@ -40,7 +40,7 @@ What truly distinguishes Pocket Stack is its card-first architecture. Every piec
 #### Accent & Interactive
 - **Mint** (`#00D492`): `--pocket-accent`. Primary CTA, active state, step progress bars.
 - **Deep Mint** (`#00A872`): `--pocket-accent-deep`. Status badge text, hover emphasis.
-- **White** (`#FFFFFF`): `--pocket-accent-foreground`. Text on accent backgrounds.
+- **White** (`#FFFFFF`): `--pocket-accent-foreground` (alias: `--pocket-accent-fg`). Text on accent backgrounds.
 
 #### Neutral Scale
 - **Muted** (`#7A7A72`): `--pocket-muted`. Secondary body text, descriptions, metadata, inactive nav.
@@ -77,7 +77,7 @@ What truly distinguishes Pocket Stack is its card-first architecture. Every piec
 #### Accent & Interactive
 - **Neon Mint** (`#00E5A0`): `--pocket-accent`. Primary CTA. Vivid on dark surfaces.
 - **Deep Mint** (`#00B880`): `--pocket-accent-deep`. Hover states, status text.
-- **Void** (`#08080D`): `--pocket-accent-foreground`. Text on accent backgrounds.
+- **Void** (`#08080D`): `--pocket-accent-foreground` (alias: `--pocket-accent-fg`). Text on accent backgrounds.
 
 #### Neutral Scale
 - **Muted** (`#5E5E72`): `--pocket-muted`. Secondary text, descriptions, inactive nav.
